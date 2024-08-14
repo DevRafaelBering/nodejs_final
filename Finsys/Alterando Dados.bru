@@ -1,0 +1,20 @@
+meta {
+  name: Alterando Dados
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3000/transactions/1723595471945
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title" : "Mudou apartamento",
+    "type" : "Mt boa",
+    "category" : "Mudou apartamento",
+    "amount": 15615616
+  }
+}
