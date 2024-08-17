@@ -1,44 +1,53 @@
-let transactions = [];
+const Transaction = require('../infra/models/Transaction.js');
 
-exports.getAllTransactions = (request, response) => {
-    response.json(transactions);
+// Criar nova transação
+const createTransaction = async (req, res) => {
+  try {
+    const newTransaction = new Transaction(req.body);
+    await newTransaction.save();
+    res.status(201).json(newTransaction);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao criar transação' });
+  }
 };
 
-exports.createTransaction = (request, response) => {
-    let id = new Date().getTime();
-    let transaction = {
-        id: id, ...request.body
-    };
-    console.log(request.body);
-    transactions.push(transaction);
-    response.send("ok");
+// Obter todas as transações
+const getAllTransactions = async (req, res) => {
+  try {
+    const transactions = await Transaction.find();
+    res.json(transactions);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar transações' });
+  }
 };
 
-exports.updateTransaction = (request, response) => {
-    let id = parseInt(request.params.id, 10);
-    let updatedTransaction = request.body;
-
-    let index = transactions.findIndex(transaction => transaction.id === id);
-
-    if (index === -1) {
-        return response.status(404).json({ error: "Transaction not found" });
-    }
-
-    transactions[index] = { ...transactions[index], ...updatedTransaction };
-
-    response.json(transactions[index]);
+// Atualizar transação por ID
+const updateTransaction = async (req, res) => {
+  try {
+    const updatedTransaction = await Transaction.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true } // Retorna a versão atualizada
+    );
+    res.json(updatedTransaction);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao atualizar transação' });
+  }
 };
 
-exports.deleteTransaction = (request, response) => {
-    let id = parseInt(request.params.id, 10);
+// Deletar transação por ID
+const deleteTransaction = async (req, res) => {
+  try {
+    await Transaction.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Transação deletada com sucesso' });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao deletar transação' });
+  }
+};
 
-    let index = transactions.findIndex(transaction => transaction.id === id);
-
-    if (index === -1) {
-        return response.status(404).json({ error: "Transaction not found" });
-    }
-
-    transactions.splice(index, 1);
-
-    response.status(204).end();
+module.exports = {
+  createTransaction,
+  getAllTransactions,
+  updateTransaction,
+  deleteTransaction,
 };

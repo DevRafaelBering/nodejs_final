@@ -2,7 +2,10 @@ const express = require('express');
 const app = express();
 const transactionRoutes = require('./routes/transactionRoutes');
 
+// Configurar o Express para lidar com JSON
 app.use(express.json());
-app.use(transactionRoutes);
+
+// Rotas
+app.use('/api', transactionRoutes);
 
 module.exports = app;

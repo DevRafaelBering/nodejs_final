@@ -1,19 +1,21 @@
 {
   "name": "FinSys",
   "version": "1.0.0",
-  "description": "A simple API for managing transactions",
-  "main": "src/config/server.js",
+  "description": "CLIENT X SERVER\r FE X BE\r Definição de APIs",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node src/config/server.js",
-    "dev": "nodemon src/config/server.js"
+    "start": "nodemon"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "mongodb": "^6.8.0",
     "mongoose": "^8.5.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
-  },
-  "author": "",
-  "license": "ISC"
+    "nodemon": "^3.1.4"
+  }
 }
