@@ -1,0 +1,20 @@
+meta {
+  name: Nova
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/transactions
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title" : "Rafael Bering",
+    "type" : "withdraw",
+    "category" : "faculdade",
+    "amount" : 2500
+  }
+}
